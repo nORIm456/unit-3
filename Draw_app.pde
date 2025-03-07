@@ -15,17 +15,21 @@ color selectedColor;
 
 float sliderY;
 float thickness;
+PImage rizz2;
+boolean rizz2On; // true or false
 
 void setup() {
   size(800, 600);
   background(255);
   sliderY = 220;
   thickness = 0;
+  rizz2 = loadImage("rizz2.png");
+  rizz2On = false;
 }
 
 void draw() {
 
-  thickness = map(sliderY, 40, 400, 0, 15);
+  thickness = map(sliderY, 5, 400, 0, 15);
 
   strokeWeight(5);
 
@@ -33,49 +37,72 @@ void draw() {
   fill(grey);
   rect(620, 0, 800, 430);
 
-  stroke(black);
-  fill(black);
+  stroke(grey);
+  fill(grey);
   rect(0, 430, 800, 600);
 
   //buttons
-  tactile(120, 520, 50);
+  tactile(120, 550, 20);
   fill(blue);
-  circle(120, 520, 50);
+  circle(120, 550, 50);
 
-  tactile(40, 520, 50);
+  tactile(40, 550, 20);
   fill(red);
-  circle(40, 520, 50);
+  circle(40, 550, 50);
 
-  tactile(200, 520, 50);
+  tactile(200, 550, 20);
   fill(yellow);
-  circle(200, 520, 50);
+  circle(200, 550, 50);
 
-  tactile(280, 520, 50);
+  tactile(280, 550, 20);
   fill(green);
-  circle(280, 520, 50);
+  circle(280, 550, 50);
 
-  tactile(360, 520, 50);
+  tactile(360, 550, 20);
   fill(orange);
-  circle(360, 520, 50);
-  
+  circle(360, 550, 50);
+
+  tactile(660, 480, 20);
   fill(white);
   circle(660, 480, 50);
-  
+
+  tactile(360, 540, 20);
   fill(black);
-  stroke(white);
   circle(660, 540, 50);
-  
+
   strokeWeight(5);
   stroke(0);
   fill(225);
   rect(700, 440, 80, 40);
   rect(700, 490, 80, 40);
   rect(700, 540, 80, 40);
-  
+
   stroke(black);
   fill(white);
-  line(715, 40, 715, 400);
-  circle(715, sliderY, 50);
+  line(20, 480, 380, 480);
+  circle(sliderY, 480, 50);
+
+  stroke(black);
+  fill(selectedColor);
+  rect(570, 490, 40, 40);
+
+  //RIZZ button
+  tactile(430, 460, 100);
+  if(rizz2On) {
+    fill(black);
+  } else { 
+    fill(white);
+  }
+  square(430, 460, 100);
+  image(rizz2, 430, 460, 100, 100);
+}
+
+void tactile(int x, int y, int w, int h) {
+  if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h) {
+    fill(255, 255, 0);
+  } else {
+    fill(255);
+  }
 }
 
 void tactile (int x, int y, int r) {
@@ -87,34 +114,53 @@ void tactile (int x, int y, int r) {
 } // end tactile======================
 
 void mouseDragged() {
-  stroke(selectedColor);
-  strokeWeight(thickness);
-  line(pmouseX, pmouseY, mouseX, mouseY);
   controlSlider();
+  if (mouseX > 0 && mouseX < 620 && mouseY > 0 && mouseY < 430) {
+    stroke(selectedColor);
+    strokeWeight(thickness);
+  }
+
+  if (rizz2On == false) {
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  } else {
+    //rizz2 drawing
+    image(rizz2, mouseX, mouseY, 100, 100);
+  }
 }
 
 void mouseReleased() {
+  //rizz2 button
+  if (mouseX > 430 && mouseX < 530 && mouseY > 460 && mouseY < 560) {
+    rizz2On = !rizz2On;
+  }
+  
   controlSlider();
 
-  if ( dist(120, 520, mouseX, mouseY) < 50) {
+  if ( dist(120, 550, mouseX, mouseY) < 50) {
     selectedColor = blue;
   }
-  if ( dist(40, 520, mouseX, mouseY) < 50) {
+  if ( dist(40, 550, mouseX, mouseY) < 50) {
     selectedColor = red;
   }
-  if ( dist(200, 520, mouseX, mouseY) < 50) {
+  if ( dist(200, 550, mouseX, mouseY) < 50) {
     selectedColor = yellow;
   }
-  if ( dist(280, 520, mouseX, mouseY) < 50) {
+  if ( dist(280, 550, mouseX, mouseY) < 50) {
     selectedColor = green;
   }
-  if ( dist(360, 520, mouseX, mouseY) < 50) {
+  if ( dist(360, 550, mouseX, mouseY) < 50) {
     selectedColor = orange;
+  }
+  if ( dist(660, 480, mouseX, mouseY) < 50) {
+    selectedColor = white;
+  }
+  if ( dist(660, 540, mouseX, mouseY) < 50) {
+    selectedColor = black;
   }
 }
 
 void controlSlider() {
-  if (mouseY > 40 && mouseY < 400 && mouseX > 700 && mouseX < 730) {
-    sliderY = mouseY;
+  if (mouseX > 5 && mouseX < 400 && mouseY > 460 && mouseY < 500) {
+    sliderY = mouseX;
   }
 }
