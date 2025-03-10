@@ -35,10 +35,6 @@ void draw() {
 
   stroke(grey);
   fill(grey);
-  rect(620, 0, 800, 430);
-
-  stroke(grey);
-  fill(grey);
   rect(0, 430, 800, 600);
 
   //buttons
@@ -66,16 +62,27 @@ void draw() {
   fill(white);
   circle(660, 480, 50);
 
-  tactile(360, 540, 20);
+  tactile(660, 540, 20);
   fill(black);
   circle(660, 540, 50);
-
+ 
   strokeWeight(5);
   stroke(0);
   fill(225);
+  tactile(700, 440, 80, 40);
   rect(700, 440, 80, 40);
+  fill(black);
+  text("CLEAR", 723, 465);
+  //file save button
+  fill(255);
+  tactile(700, 490, 80, 40);
   rect(700, 490, 80, 40);
+  fill(black);
+  text("SAVE", 728, 515);
+  tactile(700, 540, 80, 40);
   rect(700, 540, 80, 40);
+  fill(black);
+  text("LOAD", 727, 565);
 
   stroke(black);
   fill(white);
@@ -115,11 +122,11 @@ void tactile (int x, int y, int r) {
 
 void mouseDragged() {
   controlSlider();
-  if (mouseX > 0 && mouseX < 620 && mouseY > 0 && mouseY < 430) {
+  if (mouseY > 0 && mouseY < 430) {
     stroke(selectedColor);
     strokeWeight(thickness);
   }
-
+ 
   if (rizz2On == false) {
     line(pmouseX, pmouseY, mouseX, mouseY);
   } else {
@@ -157,6 +164,14 @@ void mouseReleased() {
   if ( dist(660, 540, mouseX, mouseY) < 50) {
     selectedColor = black;
   }
+  //new button
+  if (mouseX > 700 && mouseX < 780 && mouseY > 440 && mouseY < 480) {
+    background(white);
+    rect(230, 800, 800, 230);
+  }
+  //save button
+  if (mouseX > 700 && mouseX < 780 && mouseY > 490 && mouseY < 530) {
+    selectOutput("Choose a name for your new image file", "SaveImage");
 }
 
 void controlSlider() {
