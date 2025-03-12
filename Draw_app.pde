@@ -29,7 +29,7 @@ void setup() {
 
 void draw() {
 
-  thickness = map(sliderY, 5, 400, 0, 15);
+  thickness = map(sliderY, 5, 400, 0, 30);
 
   strokeWeight(5);
 
@@ -65,7 +65,7 @@ void draw() {
   tactile(660, 540, 20);
   fill(black);
   circle(660, 540, 50);
- 
+
   strokeWeight(5);
   stroke(0);
   fill(225);
@@ -95,13 +95,13 @@ void draw() {
 
   //RIZZ button
   tactile(430, 460, 100);
-  if(rizz2On) {
+  if (rizz2On) {
     fill(black);
-  } else { 
+  } else {
     fill(white);
   }
   square(430, 460, 100);
-  image(rizz2, 430, 460, 100, 100);
+  image(rizz2, 435, 465, 100, 100);
 }
 
 void tactile(int x, int y, int w, int h) {
@@ -126,7 +126,7 @@ void mouseDragged() {
     stroke(selectedColor);
     strokeWeight(thickness);
   }
- 
+
   if (rizz2On == false) {
     line(pmouseX, pmouseY, mouseX, mouseY);
   } else {
@@ -140,7 +140,7 @@ void mouseReleased() {
   if (mouseX > 430 && mouseX < 530 && mouseY > 460 && mouseY < 560) {
     rizz2On = !rizz2On;
   }
-  
+
   controlSlider();
 
   if ( dist(120, 550, mouseX, mouseY) < 50) {
@@ -164,16 +164,40 @@ void mouseReleased() {
   if ( dist(660, 540, mouseX, mouseY) < 50) {
     selectedColor = black;
   }
-  //new button
+  //clear button
   if (mouseX > 700 && mouseX < 780 && mouseY > 440 && mouseY < 480) {
     background(white);
     rect(230, 800, 800, 230);
   }
+
   //save button
   if (mouseX > 700 && mouseX < 780 && mouseY > 490 && mouseY < 530) {
-    selectOutput("Choose a name for your new image file", "SaveImage");
+    selectOutput("Choose a name for your new image file", "saveImage");
+  }
+
+  //load button
+  if (mouseX > 700 && mouseX < 780 && mouseY > 540 && mouseY < 580) {
+    selectInput("Pick an image to load", "openImage");
+  }
+}
+void saveImage(File f) {
+  if (f != null) {
+    PImage canvas = get( 0, 0, width, 430);
+    canvas.save(f.getAbsolutePath());
+  }
 }
 
+void openImage(File f) {
+  if (f != null) {
+    //KLUDGE
+    int n = 0;
+    while (n < 10) {
+      PImage pic = loadImage(f.getPath());
+      image(pic, 0, 0);
+      n = n + 1;
+    }
+  }
+}
 void controlSlider() {
   if (mouseX > 5 && mouseX < 400 && mouseY > 460 && mouseY < 500) {
     sliderY = mouseX;
